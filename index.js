@@ -1,9 +1,17 @@
-var http = require("http");
-var port = 8080;
+const express = require('express');
+const app = express();
+const port = process.env.port || 8000;
 
-http.createServer(function (request, response) {
-   response.writeHead(200, {'Content-Type': 'text/plain'});
-   response.end('Hello World\n');
-}).listen(port);
+const appRouter=require('./app.js');
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
-console.log("Server running at http://localhost:" + port + "/");
+app.use('/api', appRouter); // Use the router with a base path
+console.log(`http://localhost:${port}/api`);
+
+app.listen(port, () => {
+  console.log(`Server running on port http://localhost:${port}`);
+});
+
+
