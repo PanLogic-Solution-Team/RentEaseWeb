@@ -1,19 +1,26 @@
 const express = require('express');
-const router = express.Router();
-const { json } = require('express');
-const port = process.env.port || 8000;
+const cors = require('cors');
+const customerRouter = require('./server/router/customer.router.js'); // Import your custom router
 
-router.use(json());
+const app = express();
+require('dotenv').config({ path: './.env' });
 
-router.get('/', (req, res) => {
-    res.json({ message: "Hello World!" });
+const port = process.env.PORT || 8000;  // Set default port to 8000 if not provided in .env
+// Middlewares
+app.use(cors());            // Enable Cross-Origin Resource Sharing
+app.use(express.json());    // Parse JSON request bodies
+
+// Define routes
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+    console.log('index.html');
+    console.log(__dirname);
+    console.log(__filename);
+    
 });
 
-
-router.get('/customer', (req, res) => {
-    res.json({ data: "500k" });
-});
-console.log(`http://localhost:${port}/api/customer`);
-
-module.exports = router;
-
+// Use the customerRouter for the '/api/customer' route
+app.use('/api/customer', customerRouter);
+console.log(`  http://localhost:${port}/api/customer`);
+// Export the app instance for use in index.js
+module.exports = { app };

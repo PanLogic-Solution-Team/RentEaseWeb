@@ -1,17 +1,12 @@
-const express = require('express');
-const app = express();
-const port = process.env.port || 8000;
+const { app } = require('./app.js');  // Import the express app
+require('dotenv').config({ path: './.env' }); // Load environment variables
 
-const appRouter=require('./app.js');
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+const port = process.env.PORT || 8000;  // Set default port to 8000 if not provided in .env
 
-app.use('/api', appRouter); // Use the router with a base path
-console.log(`http://localhost:${port}/api`);
-
+// Start the server
 app.listen(port, () => {
-  console.log(`Server running on port http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
+  console.log(`API available at:`);
+  console.log(`  http://localhost:${port}/api/customer`);
+  console.log(`  http://localhost:${port}/api/customer/info`);
 });
-
-
