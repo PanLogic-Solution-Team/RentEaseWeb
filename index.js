@@ -9,4 +9,5 @@ app.listen(port, () => {
   console.log(`API available at:`);
   console.log(`  http://localhost:${port}/api/customer`);
   console.log(`  http://localhost:${port}/api/customer/info`);
+  console.log(`  http://localhost:${port}/api/customer/find-room`);
 });
