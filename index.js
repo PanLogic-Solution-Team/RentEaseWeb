@@ -18,7 +18,8 @@ const PORT = process.env.PORT || 8000;
 
 // Run server
 app.listen(PORT, () => {
-  console.log(`Server is running on  http://localhost:${PORT}`.yellow);
-  console.log(`http://localhost:${PORT}/api/v1/customer`)
+  console.log(`Server is running on ===========Index.html file =======> http://localhost:${PORT}`.green);
+  console.log(`http://localhost:${PORT}/api/v1/customer`.green)
+  console.log(`http://localhost:${PORT}/api/v1/customer/info`.green)
 });
 
