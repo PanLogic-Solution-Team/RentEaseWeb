@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Room for Rent</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Add Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body class="bg-gray-100">
+    <h1 class="text-4xl font-bold text-center">Find a Room for Rent</h1>
+    <form class="max-w-md mx-auto mt-10" action="/api/customer/find-room" method="POST">
+        <label class="block mb-2" for="city">City:</label>
+        <input
+            class="block w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+            type="text" name="city" id="city"><br>
+        <label class="block mb-2" for="price">Price:</label>
+        <input
+            class="block w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+            type="number" name="price" id="price"><br>
+        <label class="block mb-2" for="area">Area:</label>
+        <input
+            class="block w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+            type="text" name="area" id="area"><br>
+        <input
+            class="mt-4 px-4 py-2 text-xl font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-200"
+            type="submit" value="Search">
+    </form>
+    <div id="results" class="max-w-md mx-auto mt-10"></div>
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const city = document.querySelector('#city').value;
+            const price = document.querySelector('#price').value;
+            const area = document.querySelector('#area').value;
+            fetch(`/api/customer/find-room?city=${city}&price=${price}&area=${area}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.querySelector('#results');
+                    resultsDiv.innerHTML = ` 
+                                    <h2 class="text-2xl font-bold">Results</h2>
+                                    <ul class="mt-4">
+                                          ${data.map(item => `<li class="bg-white p-4 border border-gray-300 rounded-md">${item.name} - ${item.price} /month - ${item.area} sqft</li>`).join('')}
+                                    </ul>
+                              `;
+                });
+        });
+    </script>
+    <footer class="mt-10 bg-black text-white">
+        <div class="container mx-auto flex flex-wrap justify-center">
+            <div class="w-full md:w-1/4 xl:w-1/4 p-6">
+                <h2 class="text-2xl font-bold">About</h2>
+                <p class="mt-4">
+                    iRentEase is a platform to find and rent houses, apartments, and rooms in India. We offer a wide
+                    range of options from budget-friendly rooms to luxury apartments.
+                </p>
+            </div>
+            <div class="w-full md:w-1/4 xl:w-1/4 p-6">
+                <h2 class="text-2xl font-bold">Contact</h2>
+                <p class="mt-4">
+                    <span class="font-bold">Phone:</span> +91 99999 99999
+                </p>
+                <p class="mt-4">
+                    <span class="font-bold">Email:</span> <a href="mailto:info@irentease.com">info@irentease.com</a>
+                </p>
+                <p class="mt-4">
+                    <span class="font-bold">Address:</span> 123, ABC Road, XYZ City, India
+                </p>
+            </div>
+            <div class="w-full md:w-1/4 xl:w-1/4 p-6">
+                <h2 class="text-2xl font-bold">Location</h2>
+                <p class="mt-4">
+                    <iframe src="https://www.google.com/maps/embed?pb=..." width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </p>
+            </div>
+            <div class="w-full md:w-1/4 xl:w-1/4 p-6">
+                <h2 class="text-2xl font-bold">Social Media</h2>
+                <p class="mt-4">
+                    <a href="https://www.facebook.com/irentease" target="_blank" style="color: #3b5998"> <i class="fab fa-facebook fa-2x mr-4"></i></a>
+                    <a href="https://twitter.com/irentease" target="_blank"> <i class="fab fa-twitter fa-2x mr-4" style="color: #1da1f2"></i></a>
+                    <a href="https://www.instagram.com/irentease" target="_blank"> <i class="fab fa-instagram fa-2x mr-4"></i></a>
+                    <a href="https://www.linkedin.com/company/irentease" target="_blank"> <i class="fab fa-linkedin fa-2x mr-4"></i></a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <section class="bg-black text-white py-4">
+        <div class="container mx-auto flex flex-wrap justify-center">
+            <p class="text-center">
+                &copy; <script>document.write(new Date().getFullYear());</script> <a href="https://www.irentease.com" target="_blank">iRentEase</a>. All rights reserved. Managed by <a href="https://www.panlogictech.com" target="_blank">PanlogicTech Solution Team</a>.
+            </p>
+        </div>
+    </section>
+</body>
+</html>
