@@ -1,30 +1,17 @@
-// app.js
 import express from 'express';
+import color from 'colors';
 import cors from 'cors';
-import customerRouter from './server/router/customerRouter.js';
-import connectToDatabase from './server/Database/databaseConnection.js';
 import dotenv from 'dotenv';
+import Customer from './server/router/customerRouter.js';
 
-dotenv.config();
+
+dotenv.config(
+); // Load environment variables
 
 const app = express();
-const port = process.env.PORT || 8000;
+// Routes
+app.use("/api/v1/customer", Customer); 
 
-app.use(cors());
-app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
-
-app.use('/api/customer', customerRouter);
-
-connectToDatabase()
-  .then(() => {
-    console.log(`Connected to database`);
-  })
-  .catch((err) => {
-    console.error('Database connection failed', err);
-  });
-
-export default app;
+// Export the app
+export { app };

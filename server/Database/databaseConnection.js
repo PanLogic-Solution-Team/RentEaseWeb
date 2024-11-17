@@ -1,26 +1,35 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import colors from 'colors';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '../../.env' });
+// Load environment variables from .env file
+dotenv.config({ path: './.env' });
 
-/**
- * Asynchronously connects to a MongoDB database using Mongoose.
- * The connection URI and database name are retrieved from environment variables.
- * If the connection is successful, a success message is logged to the console.
- * If there is an error during the connection attempt, an error message is logged
- * and the process exits with a failure code.
- */
+// Import the database name constant
+import { database } from '../utils/constant.js';
+
+// Ensure that the required environment variables are set
+if (!process.env.MONGO_URI) {
+  console.error("Error: MONGO_URI is not defined in .env file".red);
+  process.exit(1);
+}
+
+// Set the strictQuery option for Mongoose
+mongoose.set('strictQuery', true); // or false, depending on your preference
+
+// Connect to MongoDB function
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      dbName: process.env.DATABASE_NAME || 'defaultDbName', // Ensure DATABASE_NAME is set in .env
+    const connection = await mongoose.connect(process.env.MONGO_URI, {
+      dbName: database,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`Connected to MongoDB successfully at host: ${mongoose.connection.host}`);
+
+    console.log(`Connected to ${database} database successfully at host: ${connection.connection.host}`.green);
   } catch (error) {
-    console.error(`Error connecting to MongoDB: ${error.message}`);
-    process.exit(1); // Exit process with failure
+    console.error(`Error connecting to MongoDB: ${error.message}`.red);
+    process.exit(1);
   }
 };
 
