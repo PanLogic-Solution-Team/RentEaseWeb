@@ -1,26 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const customerRouter = require('./server/router/customer.router.js'); // Import your custom router
+import express from 'express';
+import color from 'colors';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import Customer from './server/router/customerRouter.js';
+
+
+dotenv.config(
+); // Load environment variables
 
 const app = express();
-require('dotenv').config({ path: './.env' });
+// Routes
+app.use("/api/v1/customer", Customer); 
 
-const port = process.env.PORT || 8000;  // Set default port to 8000 if not provided in .env
-// Middlewares
-app.use(cors());            // Enable Cross-Origin Resource Sharing
-app.use(express.json());    // Parse JSON request bodies
 
-// Define routes
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-    console.log('index.html');
-    console.log(__dirname);
-    console.log(__filename);
-    
-});
-
-// Use the customerRouter for the '/api/customer' route
-app.use('/api/customer', customerRouter);
-console.log(`  http://localhost:${port}/api/customer`);
-// Export the app instance for use in index.js
-module.exports = { app };
+// Export the app
+export { app };
