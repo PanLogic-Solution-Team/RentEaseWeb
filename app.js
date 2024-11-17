@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
    res.sendFile('index.html', { root: 'public' })   
 });
 
-console.log('hello')
+console.log('hello akshay')
 // Routes
 app.use("/api/v1/customer", Customer); 
 console.log(`\n
