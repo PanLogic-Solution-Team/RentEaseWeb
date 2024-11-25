@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // Prepare the SQL statement
-        $stmt = $pdo->prepare('INSERT INTO user (name, phone, address, email, password) VALUES (?, ?, ?, ?, ?)');
+        $stmt = $pdo->prepare('INSERT INTO users (name, phone, address, email, password) VALUES (?, ?, ?, ?, ?)');
         // Execute the statement with the provided data
         $stmt->execute([$name, $phone, $address, $email, $password]);
         // Return a success message

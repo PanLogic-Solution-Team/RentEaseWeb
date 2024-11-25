@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // Prepare the delete SQL query based on user_id or email
         if (!empty($user_id)) {
-            $stmt = $pdo->prepare('DELETE FROM user WHERE user_id = ?');
+            $stmt = $pdo->prepare('DELETE FROM users WHERE user_id = ?');
             $stmt->execute([$user_id]);
         } else {
-            $stmt = $pdo->prepare('DELETE FROM user WHERE email = ?');
+            $stmt = $pdo->prepare('DELETE FROM users WHERE email = ?');
             $stmt->execute([$email]);
         }
 

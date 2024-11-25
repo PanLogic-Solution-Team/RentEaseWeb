@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // Prepare the SQL statement to select the user based on email
-        $stmt = $pdo->prepare('SELECT * FROM user WHERE email = ?');
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
         $stmt->execute([$email]);
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

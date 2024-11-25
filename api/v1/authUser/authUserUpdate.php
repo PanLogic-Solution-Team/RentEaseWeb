@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // Prepare the update SQL query based on user_id or email
         if (!empty($user_id)) {
-            $stmt = $pdo->prepare('UPDATE user SET name = ?, phone = ?, address = ? WHERE user_id = ?');
+            $stmt = $pdo->prepare('UPDATE users SET name = ?, phone = ?, address = ? WHERE user_id = ?');
             $stmt->execute([$name, $phone, $address, $user_id]);
         } else {
-            $stmt = $pdo->prepare('UPDATE user SET name = ?, phone = ?, address = ? WHERE email = ?');
+            $stmt = $pdo->prepare('UPDATE users SET name = ?, phone = ?, address = ? WHERE email = ?');
             $stmt->execute([$name, $phone, $address, $email]);
         }
 
